@@ -15,7 +15,7 @@ import java.util.List;
 public class SportsDto {
     private final Integer id;
     private final String name;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<PlayerDto> players;
 
 }

@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * The type Update player sports dto.
+ */
 @Getter
 @Setter
 public class UpdatePlayerSportsDto {

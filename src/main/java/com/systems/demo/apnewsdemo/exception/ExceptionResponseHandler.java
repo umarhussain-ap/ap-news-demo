@@ -11,10 +11,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Exception response handler.
+ */
 @ControllerAdvice
 public class ExceptionResponseHandler  {
 
 
+    /**
+     * Handle method argument not valid response entity.
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex) {
@@ -28,6 +37,12 @@ public class ExceptionResponseHandler  {
     }
 
 
+    /**
+     * Handle service exception response entity.
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<Object> handleServiceException(
             ServiceException ex) {

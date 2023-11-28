@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The type Player service.
+ */
 @RequiredArgsConstructor
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -50,7 +53,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public PlayerDto createPlayerDto(CreatePlayerDto createPlayerDto) {
+    public PlayerDto createPlayer(CreatePlayerDto createPlayerDto) {
         Player player = new Player();
 
         player.setAge(createPlayerDto.getAge());
@@ -67,6 +70,37 @@ public class PlayerServiceImpl implements PlayerService {
                 .level(player.getLevel())
                 .gender(player.getGender())
                 .build();
+
+    }
+
+    @Override
+    public PlayerDto updatePlayer(Integer id, CreatePlayerDto createPlayerDto) {
+
+        Optional<Player> playerOptional = playerRepository.findById(id);
+        List<ErrorDto> errorList = new ArrayList<>();
+        Player updatedPlayer;
+        if(playerOptional.isEmpty()){
+            errorList.add(ErrorDto.builder().errorCode("101").errorMessage("No Player Found for the given Id").build());
+            throw ServiceException.of(null, errorList, HttpStatus.BAD_REQUEST);
+        }
+
+        playerOptional.get().setAge(createPlayerDto.getAge());
+        playerOptional.get().setGender(createPlayerDto.getGender());
+        playerOptional.get().setLevel(createPlayerDto.getLevel());
+        playerOptional.get().setEmail(createPlayerDto.getEmail());
+        updatedPlayer = playerRepository.save(playerOptional.get());
+
+
+
+        return PlayerDto
+                .builder()
+                .id(updatedPlayer.getId())
+                .age(updatedPlayer.getAge())
+                .email(updatedPlayer.getEmail())
+                .level(updatedPlayer.getLevel())
+                .gender(updatedPlayer.getGender())
+                .build();
+
 
     }
 

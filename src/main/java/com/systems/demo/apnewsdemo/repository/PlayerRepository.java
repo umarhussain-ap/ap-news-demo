@@ -2,12 +2,10 @@ package com.systems.demo.apnewsdemo.repository;
 
 import com.systems.demo.apnewsdemo.model.Gender;
 import com.systems.demo.apnewsdemo.model.Player;
-import com.systems.demo.apnewsdemo.model.Sport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Collection;
 import java.util.List;
 
 

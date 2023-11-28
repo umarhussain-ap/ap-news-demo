@@ -11,10 +11,11 @@ import com.systems.demo.apnewsdemo.service.SportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,23 +25,9 @@ public class SportsServiceImpl implements SportsService {
 
     @Override
     public List<SportsDto> getSportsWithPlayersGreaterThanOrEqualTo(Integer playerCount) {
-         List<Sport> sport = sportRepository.getSportsHavingPlayerGreaterThan(playerCount);
-         List<SportsDto> sportsDtos = new ArrayList<>();
+        List<Sport> sport = sportRepository.getSportsHavingPlayerGreaterThan(playerCount);
 
-         sport.forEach(s -> {
-
-             List<PlayerDto> playerDtos = mapPlayerToPlayDto(s);
-
-             SportsDto sportsDto = SportsDto
-                     .builder()
-                     .name(s.getName())
-                     .id(s.getId())
-                     .players(playerDtos)
-                     .build();
-             sportsDtos.add(sportsDto);
-         });
-
-         return sportsDtos;
+        return getSportsDtos(sport);
     }
 
     @Override
@@ -60,7 +47,7 @@ public class SportsServiceImpl implements SportsService {
 
         List<ErrorDto> errorList = new ArrayList<>();
         Optional<Sport> sportOptional = sportRepository.findById(sportId);
-        if(sportOptional.isEmpty()) {
+        if (sportOptional.isEmpty()) {
             errorList.add(ErrorDto
                     .builder()
                     .errorCode("101")
@@ -96,10 +83,53 @@ public class SportsServiceImpl implements SportsService {
         sportRepository.deleteById(id);
     }
 
-    private  List<PlayerDto> mapPlayerToPlayDto(Sport s) {
+    @Override
+    public List<SportsDto> getSportsByName(Set<String> sportName) {
+
+        Set<Sport> sports = sportRepository.findSportsByNameIn(sportName);
+        List<Sport> orderdList = new ArrayList<>();
+        if (CollectionUtils.isEmpty(sports)) {
+            List<ErrorDto> errorList =
+                    List.of(ErrorDto
+                            .builder()
+                            .errorCode("101")
+                            .errorMessage("No SportFound for the given sport names").build());
+
+            throw ServiceException.of(null, errorList, HttpStatus.BAD_REQUEST);
+        }
+        Map<String, Sport> sportMap = sports.stream()
+                .collect(Collectors.toMap(Sport::getName, Function.identity()));
+        sports.forEach(sport -> {
+            if (sportMap.containsKey(sport.getName())) {
+                orderdList.add(sportMap.get(sport.getName()));
+            }
+
+        });
+        return getSportsDtos(orderdList);
+    }
+
+    private List<SportsDto> getSportsDtos(List<Sport> sport) {
+        List<SportsDto> sportsDtos = new ArrayList<>();
+
+        sport.forEach(s -> {
+
+            List<PlayerDto> playerDtos = mapPlayerToPlayDto(s);
+
+            SportsDto sportsDto = SportsDto
+                    .builder()
+                    .name(s.getName())
+                    .id(s.getId())
+                    .players(playerDtos)
+                    .build();
+            sportsDtos.add(sportsDto);
+        });
+        return sportsDtos;
+    }
+
+    private List<PlayerDto> mapPlayerToPlayDto(Sport s) {
         List<PlayerDto> playerDtos = new ArrayList<>();
         s.getPlayers().forEach(playerSports -> {
-            PlayerDto playerDto  =
+            PlayerDto playerDto =
                     PlayerDto.builder()
                             .age(playerSports.getPlayer().getAge())
                             .email(playerSports.getPlayer().getEmail())

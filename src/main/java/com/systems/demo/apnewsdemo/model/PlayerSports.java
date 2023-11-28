@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * The type Player sports.
+ */
 @Entity
 @Table(name = "player_sport")
 @Getter

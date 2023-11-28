@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * The type Player.
+ */
 @Entity
 @Getter
 @Setter

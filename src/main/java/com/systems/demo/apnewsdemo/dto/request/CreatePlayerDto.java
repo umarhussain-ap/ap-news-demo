@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The type Create player dto.
+ */
 @Getter
 @Setter
 public class CreatePlayerDto {

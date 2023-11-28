@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The type Create sports dto.
+ */
 @Getter
 @Setter
 public class CreateSportsDto {

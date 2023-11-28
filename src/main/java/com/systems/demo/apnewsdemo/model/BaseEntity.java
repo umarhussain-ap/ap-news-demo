@@ -7,6 +7,9 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Base entity.
+ */
 @MappedSuperclass
 @Getter
 @Setter

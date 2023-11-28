@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The interface Sport repository.
@@ -16,6 +17,14 @@ import java.util.List;
 public interface SportRepository extends JpaRepository<Sport,Integer> {
 
 
+    /**
+     * Find sports by name in list.
+     *
+     * @param names the names
+     * @return the list
+     */
+    @Query("select s from Sport s where s.name in :name")
+    Set<Sport> findSportsByNameIn(@Param("name") Collection<String> names);
 
     /**
      * Gets sports having player greater than.

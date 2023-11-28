@@ -9,6 +9,9 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * The type Sport.
+ */
 @Entity
 @Table(name = "sport")
 @Getter
