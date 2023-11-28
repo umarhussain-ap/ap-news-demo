@@ -1,5 +1,6 @@
 package com.systems.demo.apnewsdemo.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,5 +15,7 @@ import java.util.List;
 public class SportsDto {
     private final Integer id;
     private final String name;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final List<PlayerDto> players;
+
 }

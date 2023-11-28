@@ -1,6 +1,7 @@
 package com.systems.demo.apnewsdemo.controller;
 
 import com.systems.demo.apnewsdemo.dto.request.CreatePlayerDto;
+import com.systems.demo.apnewsdemo.dto.request.UpdatePlayerSportsDto;
 import com.systems.demo.apnewsdemo.dto.response.PlayerDto;
 import com.systems.demo.apnewsdemo.service.PlayerService;
 import jakarta.validation.Valid;
@@ -23,9 +24,15 @@ public class PlayerController {
         return new ResponseEntity<>(playerService.getPlayersWithNoSports(), HttpStatus.OK);
     }
 
-    @PostMapping("/create-player")
-    public ResponseEntity<PlayerDto> createPlayer(@Valid @RequestBody CreatePlayerDto createPlayerDto){
+    @PostMapping
+    public ResponseEntity<PlayerDto> createPlayer(@Valid @RequestBody CreatePlayerDto createPlayerDto) {
         return new ResponseEntity<>(playerService.createPlayerDto(createPlayerDto),HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}/update-sports")
+    public ResponseEntity<PlayerDto> updatePlayerWithSports(@PathVariable(name = "id") Integer id,
+                                                            @Valid @RequestBody UpdatePlayerSportsDto updatePlayerSportsDto) {
+        return new ResponseEntity<>(playerService.updatePlayerWithSport(id,updatePlayerSportsDto),HttpStatus.OK);
     }
 
 }

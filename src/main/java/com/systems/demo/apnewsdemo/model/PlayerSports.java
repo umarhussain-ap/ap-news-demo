@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "player_sport")
 @Getter
@@ -18,4 +20,15 @@ public class PlayerSports extends BaseEntity {
     @JoinColumn(name="sport_id",nullable = false)
     private Sport sport;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PlayerSports that)) return false;
+        return Objects.equals(player.getId(), that.player.getId()) && Objects.equals(sport.getId(), that.sport.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player.getId(), sport.getId());
+    }
 }

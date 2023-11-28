@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "sport")
@@ -16,5 +16,5 @@ import java.util.Collection;
 public class Sport extends BaseEntity {
     private String name;
     @OneToMany(mappedBy="sport",orphanRemoval = true,cascade = CascadeType.ALL)
-    private Collection<PlayerSports> players;
+    private Set<PlayerSports> players;
 }

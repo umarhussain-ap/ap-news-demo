@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,6 +17,6 @@ public class Player extends BaseEntity  {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @OneToMany(mappedBy="player",orphanRemoval = true,cascade = CascadeType.ALL)
-    private Collection<PlayerSports> sports;
+    private Set<PlayerSports> sports;
 
 }
