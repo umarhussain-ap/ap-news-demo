@@ -128,17 +128,20 @@ public class SportsServiceImpl implements SportsService {
 
     private List<PlayerDto> mapPlayerToPlayDto(Sport s) {
         List<PlayerDto> playerDtos = new ArrayList<>();
-        s.getPlayers().forEach(sportPlayer -> {
-            PlayerDto playerDto =
-                    PlayerDto.builder()
-                            .age(sportPlayer.getPlayer().getAge())
-                            .email(sportPlayer.getPlayer().getEmail())
-                            .gender(sportPlayer.getPlayer().getGender())
-                            .level(sportPlayer.getPlayer().getLevel())
-                            .id(sportPlayer.getPlayer().getId())
-                            .build();
-            playerDtos.add(playerDto);
-        });
+        if(!CollectionUtils.isEmpty(s.getPlayers())){
+            s.getPlayers().forEach(sportPlayer -> {
+                PlayerDto playerDto =
+                        PlayerDto.builder()
+                                .age(sportPlayer.getPlayer().getAge())
+                                .email(sportPlayer.getPlayer().getEmail())
+                                .gender(sportPlayer.getPlayer().getGender())
+                                .level(sportPlayer.getPlayer().getLevel())
+                                .id(sportPlayer.getPlayer().getId())
+                                .build();
+                playerDtos.add(playerDto);
+            });
+        }
+
         return playerDtos;
     }
 }
