@@ -1,9 +1,12 @@
 package com.systems.demo.apnewsdemo;
 
 import com.systems.demo.apnewsdemo.dto.request.CreatePlayerDto;
+import com.systems.demo.apnewsdemo.dto.request.UpdatePlayerSportsDto;
 import com.systems.demo.apnewsdemo.dto.response.PlayerDto;
 import com.systems.demo.apnewsdemo.model.Player;
+import com.systems.demo.apnewsdemo.model.Sport;
 import com.systems.demo.apnewsdemo.repository.PlayerRepository;
+import com.systems.demo.apnewsdemo.repository.SportRepository;
 import com.systems.demo.apnewsdemo.service.impl.PlayerServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,8 +15,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,6 +29,8 @@ class PlayerServiceTest {
 
     @Mock
     private PlayerRepository playerRepository;
+    @Mock
+    private SportRepository sportRepository;
 
     @InjectMocks
     private PlayerServiceImpl playerService;
@@ -61,13 +68,40 @@ class PlayerServiceTest {
 
         List<Player> players = List.of(playerEntity);
 
-        List<PlayerDto> playerDtos  = List.of(PlayerDto.builder().email("example@example.com").build());
+        Mockito.when(playerRepository.getPlayerHavingNoSports()).thenReturn(players);
 
-        Mockito.lenient().when(playerRepository.getPlayerHavingNoSports()).thenReturn(players);
-
-        playerDtos = playerService.getPlayersWithNoSports();
+        List<PlayerDto> playerDtos = playerService.getPlayersWithNoSports();
 
         assertNotNull(playerDtos);
         assertEquals(players.get(0).getEmail(), playerDtos.get(0).getEmail());
     }
+    @Test
+    void testUpdatePlayerWithSport() {
+        Integer playerId = 1;
+        UpdatePlayerSportsDto sportsRequest = new UpdatePlayerSportsDto();
+        Set<Integer> sportIds = new HashSet<>();
+        sportIds.add(1);
+        sportsRequest.setSportIds(sportIds);
+
+        Player player = new Player();
+        player.setId(1);
+        player.setAge(25);
+        player.setLevel(5);
+        player.setEmail("umar@test.com");
+        player.setSports(new HashSet<>());
+
+        Sport sport = new Sport();
+        sport.setName("Badminton");
+        sport.setId(1);
+
+        Mockito.when(playerRepository.findById(1)).thenReturn(Optional.of(player));
+        Mockito.when(sportRepository.findAllById(sportIds)).thenReturn(List.of(sport));
+
+        PlayerDto updatedPlayer = playerService.updatePlayerWithSport(playerId,sportsRequest);
+
+        assertNotNull(updatedPlayer);
+        assertEquals(1, updatedPlayer.getSports().size());
+    }
+
+
 }

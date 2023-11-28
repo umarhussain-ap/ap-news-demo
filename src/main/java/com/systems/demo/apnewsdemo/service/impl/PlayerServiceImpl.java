@@ -120,9 +120,12 @@ public class PlayerServiceImpl implements PlayerService {
 
         if(optionalPlayer.isPresent()) {
             Set<PlayerSports> playerSports = optionalPlayer.get().getSports();
-            playerSports.forEach(playerSport ->
-                updatePlayerSportsDto.getSportIds().remove(playerSport.getSport().getId())
-            );
+            if(!CollectionUtils.isEmpty(playerSports)) {
+                playerSports.forEach(playerSport ->
+                        updatePlayerSportsDto.getSportIds().remove(playerSport.getSport().getId())
+                );
+            }
+
         }
 
         if (!CollectionUtils.isEmpty(updatePlayerSportsDto.getSportIds())) {
