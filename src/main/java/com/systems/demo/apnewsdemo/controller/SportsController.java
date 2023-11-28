@@ -4,6 +4,7 @@ import com.systems.demo.apnewsdemo.dto.request.CreateSportsDto;
 import com.systems.demo.apnewsdemo.dto.response.SportsDto;
 import com.systems.demo.apnewsdemo.service.SportsService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,11 @@ public class SportsController {
     @PostMapping
     public ResponseEntity<SportsDto> createSport(@Valid @RequestBody CreateSportsDto createSportsDto) {
         return new ResponseEntity<>(sportsService.createSport(createSportsDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{Id}")
+    public ResponseEntity<SportsDto> getSport(@NotNull(message = "Id cannot be null") @PathVariable(name = "Id") Integer id) {
+        return new ResponseEntity<>(sportsService.getSport(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

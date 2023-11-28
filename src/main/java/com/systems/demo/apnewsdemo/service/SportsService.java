@@ -12,6 +12,8 @@ public interface SportsService {
 
     List<SportsDto> getSportsWithPlayersGreaterThanOrEqualTo(Integer playerCount);
 
+    SportsDto getSport(Integer sportId);
+
     List<SportsDto> noPlayersEnlisted();
 
     void deleteSports(Integer id);
