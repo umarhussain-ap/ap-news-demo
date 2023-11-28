@@ -29,7 +29,7 @@ public class ExceptionResponseHandler  {
 
 
     @ExceptionHandler(ServiceException.class)
-    public ResponseEntity handleServiceException(
+    public ResponseEntity<Object> handleServiceException(
             ServiceException ex) {
 
         if (!CollectionUtils.isEmpty(ex.getErrors())) {
