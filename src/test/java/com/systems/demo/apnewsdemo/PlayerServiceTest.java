@@ -5,14 +5,12 @@ import com.systems.demo.apnewsdemo.dto.response.PlayerDto;
 import com.systems.demo.apnewsdemo.model.Player;
 import com.systems.demo.apnewsdemo.repository.PlayerRepository;
 import com.systems.demo.apnewsdemo.service.impl.PlayerServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
