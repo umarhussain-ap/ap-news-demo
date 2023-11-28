@@ -30,6 +30,6 @@ public interface PlayerRepository extends JpaRepository<Player,Integer> {
                                                   @Param("level") Integer level,
                                                   @Param("gender") Gender gender);
 
-    @Query("select p from Player p left join PlayerSports sp on p.id = sp.player.id where sp.player is null ")
+    @Query("select p from Player p left join SportPlayer sp on p.id = sp.player.id where sp.player is null ")
     List<Player> getPlayerHavingNoSports();
 }

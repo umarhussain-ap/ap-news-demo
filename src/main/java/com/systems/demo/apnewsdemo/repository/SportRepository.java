@@ -40,7 +40,7 @@ public interface SportRepository extends JpaRepository<Sport,Integer> {
      * HAVING COUNT(sp.player_id) > 2;
      */
     @Query("select s from Sport s   " +
-            "join fetch PlayerSports sp on s.id = sp.sport.id " +
+            "join fetch SportPlayer sp on s.id = sp.sport.id " +
             "GROUP BY sp.sport.id having count(sp.player.id) >= :playerCount")
     List<Sport> getSportsHavingPlayerGreaterThan(@Param("playerCount") Integer playerCount);
 
@@ -56,7 +56,7 @@ public interface SportRepository extends JpaRepository<Sport,Integer> {
      *
      * @return the sports having no players
      */
-    @Query("select s from Sport s left join PlayerSports sp on s.id = sp.sport.id where sp.sport is null ")
+    @Query("select s from Sport s left join SportPlayer sp on s.id = sp.sport.id where sp.sport is null ")
     List<Sport> getSportsHavingNoPlayers();
 
 }

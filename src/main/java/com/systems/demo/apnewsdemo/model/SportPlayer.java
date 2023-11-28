@@ -13,7 +13,7 @@ import java.util.Objects;
 @Table(name = "player_sport")
 @Getter
 @Setter
-public class PlayerSports extends BaseEntity {
+public class SportPlayer extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name="player_id",nullable = false)
@@ -26,7 +26,7 @@ public class PlayerSports extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PlayerSports that)) return false;
+        if (!(o instanceof SportPlayer that)) return false;
         return Objects.equals(player.getId(), that.player.getId()) && Objects.equals(sport.getId(), that.sport.getId());
     }
 

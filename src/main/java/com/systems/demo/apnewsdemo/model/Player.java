@@ -20,6 +20,6 @@ public class Player extends BaseEntity  {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @OneToMany(mappedBy="player",orphanRemoval = true,cascade = CascadeType.ALL)
-    private Set<PlayerSports> sports;
+    private Set<SportPlayer> sports;
 
 }

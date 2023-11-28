@@ -19,5 +19,5 @@ import java.util.Set;
 public class Sport extends BaseEntity {
     private String name;
     @OneToMany(mappedBy="sport",orphanRemoval = true,cascade = CascadeType.ALL)
-    private Set<PlayerSports> players;
+    private Set<SportPlayer> players;
 }

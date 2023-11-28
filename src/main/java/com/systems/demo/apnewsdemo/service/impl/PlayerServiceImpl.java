@@ -7,7 +7,7 @@ import com.systems.demo.apnewsdemo.dto.response.PlayerDto;
 import com.systems.demo.apnewsdemo.dto.response.SportsDto;
 import com.systems.demo.apnewsdemo.exception.ServiceException;
 import com.systems.demo.apnewsdemo.model.Player;
-import com.systems.demo.apnewsdemo.model.PlayerSports;
+import com.systems.demo.apnewsdemo.model.SportPlayer;
 import com.systems.demo.apnewsdemo.model.Sport;
 import com.systems.demo.apnewsdemo.repository.PlayerRepository;
 import com.systems.demo.apnewsdemo.repository.SportRepository;
@@ -119,13 +119,12 @@ public class PlayerServiceImpl implements PlayerService {
         }
 
         if(optionalPlayer.isPresent()) {
-            Set<PlayerSports> playerSports = optionalPlayer.get().getSports();
-            if(!CollectionUtils.isEmpty(playerSports)) {
-                playerSports.forEach(playerSport ->
+            Set<SportPlayer> sportPlayerSports = optionalPlayer.get().getSports();
+            if(!CollectionUtils.isEmpty(sportPlayerSports)) {
+                sportPlayerSports.forEach(playerSport ->
                         updatePlayerSportsDto.getSportIds().remove(playerSport.getSport().getId())
                 );
             }
-
         }
 
         if (!CollectionUtils.isEmpty(updatePlayerSportsDto.getSportIds())) {
@@ -138,10 +137,10 @@ public class PlayerServiceImpl implements PlayerService {
                         .build());
             } else {
                 sportList.forEach(sport -> {
-                    PlayerSports playerSports = new PlayerSports();
-                    playerSports.setPlayer(optionalPlayer.get());
-                    playerSports.setSport(sport);
-                    optionalPlayer.get().getSports().add(playerSports);
+                    SportPlayer sportPlayer = new SportPlayer();
+                    sportPlayer.setPlayer(optionalPlayer.get());
+                    sportPlayer.setSport(sport);
+                    optionalPlayer.get().getSports().add(sportPlayer);
                 });
             }
 

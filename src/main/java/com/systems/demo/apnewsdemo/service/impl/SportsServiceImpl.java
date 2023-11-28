@@ -37,7 +37,6 @@ public class SportsServiceImpl implements SportsService {
         sport = sportRepository.save(sport);
         return SportsDto
                 .builder()
-                .players(new ArrayList<>())
                 .name(sport.getName())
                 .build();
     }
@@ -58,6 +57,7 @@ public class SportsServiceImpl implements SportsService {
         return SportsDto
                 .builder()
                 .players(mapPlayerToPlayDto(sportOptional.get()))
+                .id(sportOptional.get().getId())
                 .name(sportOptional.get().getName())
                 .build();
 
@@ -87,7 +87,7 @@ public class SportsServiceImpl implements SportsService {
     public List<SportsDto> getSportsByName(Set<String> sportName) {
 
         Set<Sport> sports = sportRepository.findSportsByNameIn(sportName);
-        List<Sport> orderdList = new ArrayList<>();
+        List<Sport> orderedList = new ArrayList<>();
         if (CollectionUtils.isEmpty(sports)) {
             List<ErrorDto> errorList =
                     List.of(ErrorDto
@@ -101,11 +101,11 @@ public class SportsServiceImpl implements SportsService {
                 .collect(Collectors.toMap(Sport::getName, Function.identity()));
         sports.forEach(sport -> {
             if (sportMap.containsKey(sport.getName())) {
-                orderdList.add(sportMap.get(sport.getName()));
+                orderedList.add(sportMap.get(sport.getName()));
             }
 
         });
-        return getSportsDtos(orderdList);
+        return getSportsDtos(orderedList);
     }
 
     private List<SportsDto> getSportsDtos(List<Sport> sport) {
@@ -128,13 +128,14 @@ public class SportsServiceImpl implements SportsService {
 
     private List<PlayerDto> mapPlayerToPlayDto(Sport s) {
         List<PlayerDto> playerDtos = new ArrayList<>();
-        s.getPlayers().forEach(playerSports -> {
+        s.getPlayers().forEach(sportPlayer -> {
             PlayerDto playerDto =
                     PlayerDto.builder()
-                            .age(playerSports.getPlayer().getAge())
-                            .email(playerSports.getPlayer().getEmail())
-                            .level(playerSports.getPlayer().getLevel())
-                            .id(playerSports.getPlayer().getId())
+                            .age(sportPlayer.getPlayer().getAge())
+                            .email(sportPlayer.getPlayer().getEmail())
+                            .gender(sportPlayer.getPlayer().getGender())
+                            .level(sportPlayer.getPlayer().getLevel())
+                            .id(sportPlayer.getPlayer().getId())
                             .build();
             playerDtos.add(playerDto);
         });
