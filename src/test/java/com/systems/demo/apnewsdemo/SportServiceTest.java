@@ -42,8 +42,6 @@ class SportServiceTest {
         SportPlayer sportPlayer = new SportPlayer();
         sportPlayer.setSport(sport);
 
-
-
         Player player = new Player();
         player.setId(1);
         player.setEmail("test@test.com");
@@ -107,8 +105,6 @@ class SportServiceTest {
     void testGetSportsByName(){
         Set<String> sportNames =
                 new LinkedHashSet<>(Set.of("Cricket","Badminton","Hockey"));
-
-
 
         Sport cricket = new Sport();
         cricket.setId(1);

@@ -3,17 +3,22 @@ package com.systems.demo.apnewsdemo;
 import com.systems.demo.apnewsdemo.dto.request.CreatePlayerDto;
 import com.systems.demo.apnewsdemo.dto.request.UpdatePlayerSportsDto;
 import com.systems.demo.apnewsdemo.dto.response.PlayerDto;
+import com.systems.demo.apnewsdemo.model.Gender;
 import com.systems.demo.apnewsdemo.model.Player;
 import com.systems.demo.apnewsdemo.model.Sport;
 import com.systems.demo.apnewsdemo.repository.PlayerRepository;
 import com.systems.demo.apnewsdemo.repository.SportRepository;
 import com.systems.demo.apnewsdemo.service.impl.PlayerServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +27,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -94,7 +100,7 @@ class PlayerServiceTest {
         sport.setName("Badminton");
         sport.setId(1);
 
-        Mockito.when(playerRepository.findById(1)).thenReturn(Optional.of(player));
+        Mockito.when(playerRepository.findById(any())).thenReturn(Optional.of(player));
         Mockito.when(sportRepository.findAllById(sportIds)).thenReturn(List.of(sport));
 
         PlayerDto updatedPlayer = playerService.updatePlayerWithSport(playerId,sportsRequest);
@@ -102,6 +108,36 @@ class PlayerServiceTest {
         assertNotNull(updatedPlayer);
         assertEquals(1, updatedPlayer.getSports().size());
     }
+    @Test
+    void testGetPlayersBySportsCategory() {
+
+        Player player = new Player();
+        player.setId(1);
+        player.setAge(15);
+        player.setEmail("umar@test.com");
+        player.setLevel(10);
+        player.setGender(Gender.MALE);
+        Pageable pageable = Pageable.ofSize(10);
+
+        Page<Player> playerPageExpected = new PageImpl<>(List.of(player),pageable,100);
+        Mockito.when(playerRepository
+                .findAllBySportsName(any(),any()))
+                .thenReturn(playerPageExpected);
+
+        PlayerDto playerDto = PlayerDto.builder()
+                .email("umar@test.com")
+                .id(1)
+                .age(15)
+                .level(10)
+                .gender(Gender.MALE)
+                .build();
+        Page<PlayerDto> expected = new PageImpl<>(List.of(playerDto));
+
+        Page<PlayerDto> playerDtoPage = playerService
+                .getPlayersBySportsCategory("Badminton",pageable);
+
+        Assertions.assertEquals(expected.get().findFirst().get().getId(),playerDtoPage.get().findFirst().get().getId());
 
 
+    }
 }

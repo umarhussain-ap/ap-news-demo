@@ -18,7 +18,6 @@ public class CreatePlayerDto {
     private Integer age;
     @NotNull(message = "please enter player level")
     private Integer level;
-
     @NotNull(message = "please enter Gender Value")
     private Gender gender;
 }
