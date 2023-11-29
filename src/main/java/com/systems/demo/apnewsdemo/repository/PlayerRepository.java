@@ -2,6 +2,8 @@ package com.systems.demo.apnewsdemo.repository;
 
 import com.systems.demo.apnewsdemo.model.Gender;
 import com.systems.demo.apnewsdemo.model.Player;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,4 +34,9 @@ public interface PlayerRepository extends JpaRepository<Player,Integer> {
 
     @Query("select p from Player p left join SportPlayer sp on p.id = sp.player.id where sp.player is null ")
     List<Player> getPlayerHavingNoSports();
+
+    @Query("select p from Player p " +
+            "inner join SportPlayer sp on p.id  = sp.player.id " +
+            "inner join Sport s on s.id = sp.sport.id where s.name = :sportName ")
+    Page<Player> findAllBySportsName(@Param("sportName") String name, Pageable pageable);
 }

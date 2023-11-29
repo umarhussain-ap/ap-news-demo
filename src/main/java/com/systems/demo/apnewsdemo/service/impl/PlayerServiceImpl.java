@@ -14,6 +14,8 @@ import com.systems.demo.apnewsdemo.repository.SportRepository;
 import com.systems.demo.apnewsdemo.service.PlayerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -53,6 +55,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    @Transactional
     public PlayerDto createPlayer(CreatePlayerDto createPlayerDto) {
         Player player = new Player();
 
@@ -74,6 +77,23 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public Page<PlayerDto>getPlayersBySportsCategory(String category, Pageable pageable) {
+         Page<Player> players=  playerRepository.findAllBySportsName(category, pageable);
+        return players.map(this::mapPlayerToDTO);
+    }
+
+    private PlayerDto mapPlayerToDTO(Player player) {
+        return PlayerDto.builder()
+                .id(player.getId())
+                .email(player.getEmail())
+                .gender(player.getGender())
+                .age(player.getAge())
+                .level(player.getLevel())
+                .build();
+    }
+
+    @Override
+    @Transactional
     public PlayerDto updatePlayer(Integer id, CreatePlayerDto createPlayerDto) {
 
         Optional<Player> playerOptional = playerRepository.findById(id);

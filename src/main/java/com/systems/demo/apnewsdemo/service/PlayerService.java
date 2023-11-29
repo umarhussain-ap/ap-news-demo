@@ -3,6 +3,8 @@ package com.systems.demo.apnewsdemo.service;
 import com.systems.demo.apnewsdemo.dto.request.CreatePlayerDto;
 import com.systems.demo.apnewsdemo.dto.request.UpdatePlayerSportsDto;
 import com.systems.demo.apnewsdemo.dto.response.PlayerDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -24,6 +26,15 @@ public interface PlayerService {
      * @return the player dto
      */
     PlayerDto createPlayer(CreatePlayerDto createPlayerDto);
+
+    /**
+     * Gets players by sports category.
+     *
+     * @param category the category
+     * @param pageable the pageable
+     * @return the players by sports category
+     */
+    Page<PlayerDto> getPlayersBySportsCategory(String category, Pageable pageable);
 
     /**
      * Update player for the given Id return player dto.
