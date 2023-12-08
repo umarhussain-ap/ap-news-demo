@@ -14,6 +14,7 @@ import com.systems.demo.apnewsdemo.repository.SportRepository;
 import com.systems.demo.apnewsdemo.service.PlayerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ import java.util.Set;
  */
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class PlayerServiceImpl implements PlayerService {
 
     private final PlayerRepository playerRepository;
@@ -38,6 +40,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<PlayerDto> getPlayersWithNoSports() {
+        log.info("getPlayersWithNoSports");
         List<Player> players = playerRepository.getPlayerHavingNoSports();
         List<PlayerDto> playerDtos = new ArrayList<>();
         players.forEach(player -> {
@@ -51,6 +54,7 @@ public class PlayerServiceImpl implements PlayerService {
                             .build();
             playerDtos.add(playerDto);
         });
+        log.info("getPlayersWithNoSports");
         return playerDtos;
     }
 
