@@ -7,8 +7,7 @@ class MergeSort {
 	// Merges two subarrays of array[].
 	// First subarray is array[start..middle]
 	// Second subarray is array[middle+1..end]
-	void merge(double[] array, int start, int middle, int end)
-	{
+	void merge(double[] array, int start, int middle, int end) {
 		// Find sizes of two sub-arrays to be merged
 		int leftArraySize = middle - start + 1;
 		int rightArraySize = end - middle;
