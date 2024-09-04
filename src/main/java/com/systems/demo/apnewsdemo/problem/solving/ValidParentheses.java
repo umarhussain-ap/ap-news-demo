@@ -103,15 +103,10 @@ class CheckMinmumOrMaxNumber {
 class DriverClass {
 
     public static void main(String[] args) throws IOException {
-        //        BufferedReader console = new BufferedReader(
-        //            new InputStreamReader(System.in));
-        //        log.info("Input value to be validated ");
-        //
-        //        String value = console.readLine(); // ({{{{}}})) //([]){
 
         log.info("valid parenthesis ([]){ :  " + ValidParentheses.isValid("([]){"));
 
-        log.info("valid parenthesis ({{{{}}})) :  " + ValidParentheses.isValid("({{{{}}}))"));
+        log.info("valid parenthesis ({{{{}}})) : " + ValidParentheses.isValid("({{{{}}}))"));
 
         log.info("valid parenthesis [[()()]()] : {} ", ValidParentheses.isValid("[[()()]()]"));
 
