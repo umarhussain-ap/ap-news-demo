@@ -2,9 +2,9 @@ package com.systems.demo.apnewsdemo.datastructures.nodebased;
 
 import lombok.Getter;
 
-
 @Getter
 public class Queue<T> {
+
     private QueueNode<T> rootNode = null;
 
     private QueueNode<T> tailNode = null;
@@ -12,12 +12,12 @@ public class Queue<T> {
     private int size;
 
     public void insertLast(T t) {
-        if(rootNode==null) {
+        if (rootNode == null) {
             rootNode = new QueueNode<>(new QueueNode.Data<>(t), null, tailNode);
-        }else if(tailNode == null) {
+        } else if (tailNode == null) {
             tailNode = new QueueNode<>(new QueueNode.Data<>(t), rootNode, null);
-        }else {
-            QueueNode<T> node = new QueueNode<>(new QueueNode.Data<>(t),tailNode,null);
+        } else {
+            QueueNode<T> node = new QueueNode<>(new QueueNode.Data<>(t), tailNode, null);
             tailNode.next = node;
             tailNode = node;
         }
@@ -25,15 +25,15 @@ public class Queue<T> {
     }
 
     public void insertFirst(T t) {
-        if(rootNode==null) {
+        if (rootNode == null) {
             rootNode = new QueueNode<>(new QueueNode.Data<>(t), null, tailNode);
-        }else if(tailNode == null) {
+        } else if (tailNode == null) {
             QueueNode<T> queueNode = new QueueNode<>(new QueueNode.Data<>(t), null, rootNode);
             tailNode = rootNode;
             tailNode.previous = queueNode;
             tailNode.next = null;
             rootNode = queueNode;
-        }else {
+        } else {
             QueueNode<T> queueNode = new QueueNode<>(new QueueNode.Data<>(t), null, rootNode);
             rootNode.previous = queueNode;
             rootNode = queueNode;
@@ -44,12 +44,11 @@ public class Queue<T> {
     public T removeLast() {
         T value = null;
 
-        if(tailNode==null) {
+        if (tailNode == null) {
             return value;
-        }
-        else if(tailNode.previous==rootNode ) {
+        } else if (tailNode.previous == rootNode) {
             value = tailNode.getData().getValue();
-            tailNode=null;
+            tailNode = null;
             rootNode = null;
             size--;
         } else {
@@ -63,12 +62,11 @@ public class Queue<T> {
     public T removeFirst() {
         T value = null;
 
-        if(rootNode==null) {
+        if (rootNode == null) {
             return value;
-        }
-        else if(rootNode.next==tailNode ) {
+        } else if (rootNode.next == tailNode) {
             value = rootNode.getData().getValue();
-            tailNode=null;
+            tailNode = null;
             rootNode = null;
             size--;
         } else {
@@ -79,6 +77,18 @@ public class Queue<T> {
         return value;
     }
 
+    public T removeNode(QueueNode<T> node) {
+        if(node.previous != null && node.next != null) {
+
+        }
+        return null;
+    }
+
+    public void emptyQueue() {
+        rootNode = null;
+        tailNode = null;
+        size = 0;
+    }
 
 }
 

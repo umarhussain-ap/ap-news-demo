@@ -1,4 +1,5 @@
-package com.systems.demo.apnewsdemo.problem.solving;// Java program to add two numbers
+package com.systems.demo.apnewsdemo.problem.solving;
+// Java program to add two numbers
 // represented by linked list
 
 class LinkedList {

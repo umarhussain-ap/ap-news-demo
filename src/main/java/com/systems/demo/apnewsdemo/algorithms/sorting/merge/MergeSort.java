@@ -60,8 +60,7 @@ class MergeSort {
 
 	// Main function that sorts array[lowestIndex..highestIndex] using
 	// merge()
-	int sort(double[] array, int lowestIndex, int highestIndex,int callStackSize)
-	{
+	int sort(double[] array, int lowestIndex, int highestIndex,int callStackSize) {
 		if (lowestIndex < highestIndex) {
 			callStackSize++;
 			// Find the middle point
@@ -78,8 +77,7 @@ class MergeSort {
 	}
 
 	// A utility function to print array of size n
-	static void printArray(int arr[])
-	{
+	static void printArray(int arr[]) {
 		int n = arr.length;
         for (int i = 0; i < n; ++i) {
             System.out.print(arr[i] + " ");
@@ -88,8 +86,7 @@ class MergeSort {
 	}
 
 	// Driver code
-	public static void main(String args[])
-	{
+	public static void main(String args[]) {
 
 		double[] max_array = new double[100000000];
 
